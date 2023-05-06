@@ -4,8 +4,12 @@ const ErrorResponse = require('../utils/ErrorResponse')
     //@route GET /api/v1/bootcamps
     //@access Public
 exports.getBootCamps = async(req, res, next) => {
-    const data = await Bootcamp.find({})
-    res.status(200).json({ success: true, count: data.length, data })
+    try {
+        const data = await Bootcamp.find({})
+        res.status(200).json({ success: true, count: data.length, data })
+    } catch (err) {
+        next(err)
+    }
 }
 
 //@desc Create new Bootcamp
@@ -16,7 +20,7 @@ exports.createBootCamp = async(req, res, next) => {
         const bootcamp = await Bootcamp.create(req.body)
         res.status(201).json({ success: true, data: bootcamp })
     } catch (err) {
-        res.status(400).json({ success: false, error: err.message })
+        next(err)
     }
 }
 
