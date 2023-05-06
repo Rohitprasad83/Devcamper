@@ -1,5 +1,8 @@
-exports.getBootCamps = (req, res, next) => {
-    res.status(200).json({ success: true, data: 'All Bootcamps' })
+const Bootcamp = require('../models/Bootcamp')
+
+exports.getBootCamps = async(req, res, next) => {
+    const data = BootCamp.find({})
+    res.status(200).json({ success: true, data: data })
 }
 
 exports.createBootCamp = (req, res, next) => {
